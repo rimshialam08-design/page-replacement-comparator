@@ -1,0 +1,72 @@
+PASS Empty stream / FIFO expected=0 actual=0
+PASS Empty stream / LRU expected=0 actual=0
+PASS Empty stream / Optimal expected=0 actual=0
+PASS Repeated page / FIFO expected=1 actual=1
+PASS Repeated page / LRU expected=1 actual=1
+PASS Repeated page / Optimal expected=1 actual=1
+PASS One frame / FIFO expected=3 actual=3
+PASS One frame / LRU expected=3 actual=3
+PASS One frame / Optimal expected=3 actual=3
+PASS Spare frames / FIFO expected=3 actual=3
+PASS Spare frames / LRU expected=3 actual=3
+PASS Spare frames / Optimal expected=3 actual=3
+PASS Hit refreshes recency / FIFO expected=4 actual=4
+PASS Hit refreshes recency / LRU expected=3 actual=3
+PASS Hit refreshes recency / Optimal expected=3 actual=3
+PASS Anomaly with three frames / FIFO expected=9 actual=9
+PASS Anomaly with three frames / LRU expected=10 actual=10
+PASS Anomaly with three frames / Optimal expected=7 actual=7
+PASS Anomaly with four frames / FIFO expected=10 actual=10
+PASS Anomaly with four frames / LRU expected=8 actual=8
+PASS Anomaly with four frames / Optimal expected=6 actual=6
+0 failed checks
+
+Pages: 1 2 3 4 1 2 5 1 2 3 4 5 | Frames: 2
+FIFO	LRU	Optimal  (faults)
+12	12	9	
+
+Pages: 1 2 3 4 1 2 5 1 2 3 4 5 | Frames: 3
+FIFO	LRU	Optimal  (faults)
+9	10	7	
+
+Pages: 1 2 3 4 1 2 5 1 2 3 4 5 | Frames: 4
+FIFO	LRU	Optimal  (faults)
+10	8	6	
+
+Pages: 1 2 1 3 1 | Frames: 2
+FIFO	LRU	Optimal  (faults)
+4	3	3	
+
+Pages: 1 2 1 3 1 | Frames: 3
+FIFO	LRU	Optimal  (faults)
+3	3	3	
+
+Pages: 1 2 1 3 1 | Frames: 4
+FIFO	LRU	Optimal  (faults)
+3	3	3	
+
+Pages: 1 2 1 3 1 | Frames: 2
+FIFO
+Step	Page	Frames	Decision
+1	1	1 	Fault: filled a free frame
+2	2	1 2 	Fault: filled a free frame
+3	1	1 2 	Hit: already present
+4	3	3 2 	Fault: earliest arrival, evicted 1
+5	1	3 1 	Fault: earliest arrival, evicted 2
+Faults: 4  Hits: 1
+LRU
+Step	Page	Frames	Decision
+1	1	1 	Fault: filled a free frame
+2	2	1 2 	Fault: filled a free frame
+3	1	1 2 	Hit: already present
+4	3	1 3 	Fault: oldest last use, evicted 2
+5	1	1 3 	Hit: already present
+Faults: 3  Hits: 2
+Optimal
+Step	Page	Frames	Decision
+1	1	1 	Fault: filled a free frame
+2	2	1 2 	Fault: filled a free frame
+3	1	1 2 	Hit: already present
+4	3	1 3 	Fault: needed latest or never again, evicted 2
+5	1	1 3 	Hit: already present
+Faults: 3  Hits: 2
